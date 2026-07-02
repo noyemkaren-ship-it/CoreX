@@ -1,0 +1,388 @@
+# COREX - ПОЛНОЕ РУКОВОДСТВО
+
+## ЧТО ТАКОЕ COREX?
+
+`CoreX` — это язык, который транспилируется в C++. Ты пишешь код на CoreX, он превращается в C++, а g++ компилирует его в бинарник.
+ТВОЙ КОД (.cox) → COREX → C++ КОД → g++ → ГОТОВАЯ ПРОГРАММА
+
+
+**Главная фишка:** CoreX обрабатывает только свои команды (`import`, `use`, `Sys.`). Весь остальной C++ код проходит насквозь без изменений! Можно смешивать CoreX и C++ как угодно!
+
+---
+
+## КАК НАЧАТЬ
+
+### Что нужно:
+- Java 17 или новее
+- g++
+
+### Первая программа (`hello.cox`):
+```cox
+use Sys
+use name std
+
+_main() {
+    Sys.println("Привет, мир!")
+    return 0
+}
+Запуск:
+
+java -jar CoreX.jar hello.cox hello.cpp --compilation hello --run
+СИНТАКСИС
+
+Функции
+
+Функции начинаются с _. CoreX убирает _ и добавляет int:
+
+
+_main() { return 0 }
+_foo() { return 0 }
+Превратится в:
+
+int main() { return 0; }
+int foo() { return 0; }
+IMPORT (импорт C++ библиотек)
+
+Команда	Результат
+import <iostream>	#include <iostream>
+import <vector>	#include <vector>
+import <string>	#include <string>
+import <map>	#include <map>
+import <fstream>	#include <fstream>
+import <algorithm>	#include <algorithm>
+import <cmath>	#include <cmath>
+import <memory>	#include <memory>
+import <thread>	#include <thread>
+USE (помощник)
+
+Системные:
+
+Команда	Результат
+use Sys	#include <iostream>
+use name std	using namespace std;
+ANSI-цвета:
+
+Команда	Создаёт
+use create red	std::string red = "\033[31m";
+use create green	std::string green = "\033[32m";
+use create yellow	std::string yellow = "\033[33m";
+use create blue	std::string blue = "\033[34m";
+use create magenta	std::string magenta = "\033[35m";
+use create reset	std::string reset = "\033[0m";
+Установка библиотек:
+
+Команда	Результат
+use install crow	Клонирует Crow с GitHub
+SYS (системные команды)
+
+Команда	C++ код	Описание
+Sys.println("текст")	std::cout << "текст" << std::endl;	Вывод с новой строкой
+Sys.print("текст")	std::cout << "текст";	Вывод без новой строки
+Sys.input(переменная)	std::cin >> переменная;	Ввод данных
+Sys.exit()	std::exit(0);	Выход из программы
+Sys.del(указатель)	delete указатель;	Удаление указателя
+ПОЛНЫЕ ПРИМЕРЫ
+
+Пример 1: Ввод и вывод
+
+import <string>
+use Sys
+use name std
+
+_main() {
+    string name
+    int age
+    
+    Sys.print("Введите имя: ")
+    Sys.input(name)
+    
+    Sys.print("Введите возраст: ")
+    Sys.input(age)
+    
+    Sys.print("Привет, ")
+    Sys.print(name)
+    Sys.print("! Тебе ")
+    Sys.print(age)
+    Sys.println(" лет!")
+    
+    return 0
+}
+Пример 2: Переменные и if/else
+
+use Sys
+use name std
+
+_main() {
+    int age = 18
+    
+    if (age >= 18) {
+        Sys.println("Ты совершеннолетний!")
+    } else {
+        Sys.println("Ты ещё маленький!")
+    }
+    
+    return 0
+}
+Пример 3: Циклы for и while
+
+use Sys
+use name std
+
+_main() {
+    for (int i = 0; i < 5; i++) {
+        Sys.print("Итерация: ")
+        Sys.println(i)
+    }
+    
+    int count = 3
+    while (count > 0) {
+        Sys.println("Обратный отсчёт!")
+        count = count - 1
+    }
+    
+    return 0
+}
+Пример 4: Векторы
+
+
+import <vector>
+use Sys
+use name std
+
+_main() {
+    vector<int> numbers
+    numbers.push_back(10)
+    numbers.push_back(20)
+    numbers.push_back(30)
+    
+    for (int i = 0; i < numbers.size(); i++) {
+        Sys.print("Элемент: ")
+        Sys.println(numbers[i])
+    }
+    
+    return 0
+}
+Пример 5: Строки
+
+
+import <string>
+use Sys
+use name std
+
+_main() {
+    string name = "CoreX"
+    string greeting = "Привет, " + name + "!"
+    
+    Sys.println(greeting)
+    Sys.print("Длина имени: ")
+    Sys.println(name.length())
+    
+    return 0
+}
+Пример 6: Указатели и память
+
+use Sys
+use name std
+
+_main() {
+    int* ptr = new int(42)
+    
+    Sys.print("Значение: ")
+    Sys.println(*ptr)
+    
+    Sys.del(ptr)
+    Sys.println("Память очищена!")
+    
+    return 0
+}
+Пример 7: Цветной вывод с логикой
+
+use Sys
+use name std
+use create red
+use create green
+use create reset
+
+_main() {
+    int score = 85
+    
+    if (score >= 90) {
+        Sys.println(green + "Отлично! Оценка: A" + reset)
+    } else if (score >= 80) {
+        Sys.println(green + "Хорошо! Оценка: B" + reset)
+    } else if (score >= 70) {
+        Sys.println(red + "Удовлетворительно! Оценка: C" + reset)
+    } else {
+        Sys.println(red + "Плохо! Нужно лучше!" + reset)
+    }
+    
+    return 0
+}
+Пример 8: Функции
+
+
+use Sys
+use name std
+
+_sum(int a, int b) {
+    return a + b
+}
+
+_main() {
+    int result = sum(5, 3)
+    Sys.print("Сумма: ")
+    Sys.println(result)
+    return 0
+}
+Пример 9: Классы
+
+
+import <string>
+use Sys
+use name std
+
+class Person {
+public:
+    string name
+    int age
+    
+    void introduce() {
+        Sys.print("Привет, я ")
+        Sys.print(name)
+        Sys.print(", мне ")
+        Sys.print(age)
+        Sys.println(" лет!")
+    }
+}
+
+_main() {
+    Person p
+    p.name = "Карен"
+    p.age = 25
+    p.introduce()
+    return 0
+}
+Пример 10: switch/case
+
+
+use Sys
+use name std
+
+_main() {
+    int choice = 2
+    
+    switch (choice) {
+        case 1:
+            Sys.println("Выбран первый вариант")
+            break
+        case 2:
+            Sys.println("Выбран второй вариант")
+            break
+        default:
+            Sys.println("Неизвестный выбор")
+    }
+    
+    return 0
+}
+Пример 11: ПОЛНАЯ ПРОГРАММА СО ВСЕМИ ФИЧАМИ
+
+
+import <vector>
+import <string>
+import <algorithm>
+use Sys
+use name std
+use create red
+use create green
+use create yellow
+use create blue
+use create magenta
+use create reset
+
+_isEven(int n) {
+    return n % 2 == 0
+}
+
+_main() {
+    Sys.println(blue + "===== COREX DEMO =====" + reset)
+    Sys.println("")
+    
+    vector<int> numbers
+    for (int i = 1; i <= 5; i++) {
+        numbers.push_back(i * 10)
+    }
+    
+    Sys.println(green + "Чётные числа:" + reset)
+    for (int i = 0; i < numbers.size(); i++) {
+        if (isEven(numbers[i])) {
+            Sys.print("  - ")
+            Sys.println(numbers[i])
+        }
+    }
+    
+    int score = 85
+    Sys.println("")
+    Sys.print(yellow + "Результат: " + reset)
+    
+    if (score >= 90) {
+        Sys.println(green + "ОТЛИЧНО!" + reset)
+    } else if (score >= 80) {
+        Sys.println(blue + "ХОРОШО!" + reset)
+    } else {
+        Sys.println(red + "НУЖНО ЛУЧШЕ!" + reset)
+    }
+    
+    Sys.println("")
+    Sys.println(magenta + "Программа завершена!" + reset)
+    
+    return 0
+}
+ЗАПУСК ПРОГРАММ
+
+Команда	Результат
+java -jar CoreX.jar in.cox out.cpp	Только C++ файл
+... --compilation app	+ скомпилирует в app
+... --run	+ сразу запустит
+... "-O2 -lm"	+ флаги для g++
+Примеры запуска:
+
+bash
+# Только транспиляция
+java -jar CoreX.jar main.cox main.cpp
+
+# Транспиляция + компиляция
+java -jar CoreX.jar main.cox main.cpp --compilation myapp
+
+# Транспиляция + компиляция + запуск
+java -jar CoreX.jar main.cox main.cpp --compilation myapp --run
+
+# С флагами
+java -jar CoreX.jar main.cox main.cpp --compilation myapp "-O2 -lm" --run
+ВАЖНЫЕ ПРАВИЛА
+
+Функции начинаются с _
+cox
+_main() {
+    return 0
+}
+После цветов всегда reset
+cox
+Sys.println(red + "текст" + reset)     // ПРАВИЛЬНО
+Sys.println(red + "текст")             // НЕПРАВИЛЬНО
+Строки в двойных кавычках
+cox
+Sys.println("Правильно")
+Любой C++ код работает!
+cox
+_main() {
+    int x = 10
+    int y = 20
+    int z = x + y
+    
+    for (int i = 0; i < 10; i++) {
+        Sys.println(i)
+    }
+    
+    return 0
+}
+CoreX — язык, который помогает, а не мешает! 🔥
