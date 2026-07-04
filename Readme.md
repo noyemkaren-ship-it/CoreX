@@ -23,6 +23,57 @@ meta.var a = 10
 meta.println a
 И это будет выводиться и выполняться только во время компиляции но на сам код при запуске не влияет !
 
+Вот все функции
+Все добавленные meta-функции (одна команда на строку):
+
+Математические:
+
+meta.sub x y - вычитание
+meta.mul x y - умножение
+meta.div x y - деление
+meta.mod x y - остаток
+meta.pow x y - степень
+meta.sqrt x - корень
+meta.abs x - модуль
+meta.min a b c... - минимум
+meta.max a b c... - максимум
+meta.avg a b c... - среднее
+meta.round x n - округление
+meta.random min max - случайное число
+Строковые:
+
+meta.len x - длина строки
+meta.upper x - верхний регистр
+meta.lower x - нижний регистр
+meta.trim x - обрезка пробелов
+meta.replace x old new - замена
+meta.contains x sub - содержит
+meta.starts x pref - начинается с
+meta.ends x suff - заканчивается на
+meta.index x sub - индекс подстроки
+meta.substring x s e - подстрока
+meta.reverse x - разворот
+meta.repeat x n - повтор
+Логика и управление:
+
+meta.if x > y ? yes : no - тернарный оператор
+meta.counter init step - счетчик
+meta.next - инкремент
+meta.reset - сброс
+Переменные:
+
+meta.set x=val - установка
+meta.copy src dest - копирование
+meta.swap x y - обмен
+meta.delete x - удаление
+meta.clear - очистка всех
+meta.type x - тип значения
+meta.list - список переменных
+meta.listall - все переменные
+Системные:
+
+meta.time - текущее время
+
 ### Первая программа (`hello.cox`):
 use Sys
 use name std
