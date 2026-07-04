@@ -17,7 +17,6 @@
 - g++
 
 ### Первая программа (`hello.cox`):
-```cox
 use Sys
 use name std
 
@@ -47,7 +46,37 @@ String text = "Hello";
 plus var файл.plus text
 И теперь у вас импортируется это переменную и вы можете использовать ее !
 
-Функции
+## Игры 
+Да можно писать быстро игры используя SFML
+вот пример реального кода
+#include <SFML/Graphics.hpp>
+int main() {
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML Game");
+
+
+    while (window.isOpen()) {
+        if (auto event = window.pollEvent()) {
+            if (event->is<sf::Event::Closed>()) {
+                window.close();
+            }
+        }
+        window.clear(sf::Color::Black);
+        window.display();
+    }
+    return 0;
+}
+А вот команды для компиляции
+coreX main.cox main.cpp --compilation main "-std=c++17 -I/opt/homebrew/include -L/opt/homebrew/lib -lsfml-graphics -lsfml-window -lsfml-system"
+Также если вы на MacOS советую прописать обязательно
+brew install sfml 
+Linux
+sudo apt install sfml или Pacman -S sfml
+Windwos
+Вам нужно прописать в коде
+use install sfml
+
+
+## Функции
 
 Функции начинаются с _. CoreX убирает _ и добавляет int:
 
